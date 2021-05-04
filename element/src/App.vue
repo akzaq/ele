@@ -7,8 +7,9 @@
       <router-link to="/ratings" tag="div">评论</router-link>
       <router-link to="seller" tag="div">商家</router-link>
     </div>
-
-    <router-view class="router-view" />
+    <keep-alive>
+      <router-view class="router-view" />
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -53,7 +54,7 @@ export default {
   },
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~@/assets/css/base.css';
 #app {
   height: 100vh;
@@ -72,7 +73,8 @@ export default {
     }
   }
   .router-view {
-    height: calc(100vh - 200px);
+    // height: calc(100vh - 200px);
+    height: 536px;
   }
 }
 </style>

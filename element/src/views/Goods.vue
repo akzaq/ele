@@ -1,5 +1,5 @@
 <template>
-  <div ref="goodsPage">
+  <div class="goodsPage">
     <div ref="goods">
       <van-row class="goods">
         <van-col span="5" class="good-menu">
@@ -81,19 +81,18 @@
       </van-row>
     </div>
 
+    <div
+      class="shopping"
+      style="z-index: 2800;width: 100%;background:#f3f5f7;position:fixed;bottom:-1;"
+    >
+      <good-shopping @foodChange="foodChange" />
+    </div>
+
     <good-detail
       :foodDetail="foodDetail"
       :status="show"
       @statusChange="statusChange"
     />
-
-    <div
-      class="shopping"
-      ref="shopping"
-      style="z-index: 2800;width: 100%;background:#f3f5f7;position:fixed; bottom:0"
-    >
-      <good-shopping @foodChange="foodChange" />
-    </div>
   </div>
 </template>
 
@@ -217,8 +216,8 @@ export default {
     initFoodScroll() {
       this.$nextTick(() => {
         this.scroll = new BScroll(this.$refs.wrapper, {
+          disableMouse: false, //启用鼠标拖动
           scrollbar: true, //滚动条样式
-          // pullDownRefresh: true, //配置顶部下拉的距离来决定刷新时机
           observeDOM: true,
           click: true, //开启点击事件
           probeType: 3, //监测实时滚动
@@ -249,114 +248,106 @@ export default {
         }
       }
     },
-
-    //设置goodPage高度
-    setHeight() {
-      let goodsPageHeight = this.$refs.goodsPage.clientHeight
-      let shoppingHeight = this.$refs.shopping.clientHeight
-      this.$refs.goods.style.height = (
-        goodsPageHeight -
-        shoppingHeight +
-        'px'
-      ).toString()
-    },
   },
   async created() {
-    let goodsRes = await this.$http('goods')
-    this.goods = goodsRes.data
+    let res = await this.$http('goods')
+    this.goods = res.data
     this.initFoodScroll()
     this.getFoodHeigh()
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.setHeight()
-    })
-  },
+  mounted() {},
 }
 </script>
 
 <style lang="scss" scoped>
-.goods {
-  position: relative;
+.goodsPage {
   height: 100%;
-  .good-menu {
-    height: 100%;
-    background: rgba(243, 245, 247, 1);
-    overflow-y: scroll;
-    .menu-ul {
-      display: flex;
-      flex-direction: column;
-      .meun-item {
-        height: 50px;
-        padding-left: 5px;
-        position: relative;
-        .menu-item-name {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
+
+  .goods {
+    position: relative;
+    height: 480px;
+    .good-menu {
+      height: 100%;
+      background: rgba(243, 245, 247, 1);
+      overflow-y: scroll;
+      .menu-ul {
+        display: flex;
+        flex-direction: column;
+        .meun-item {
+          height: 50px;
+          padding-left: 5px;
+          position: relative;
+          .menu-item-name {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
+        .menu-item-focus {
+          border-left: 3px solid red;
+          background: #fff;
+          border-radius: 3px;
         }
       }
-      .menu-item-focus {
-        border-left: 3px solid red;
-        background: #fff;
-        border-radius: 3px;
+    }
+    .good-info {
+      height: 100%;
+      .good-wrapper {
+        height: 100%;
+        overflow: hidden;
+        .good-title {
+          background: #ccc;
+          border-left: 2px solid rgba(66, 65, 65, 0.5);
+          padding-left: 10px;
+        }
+        .food-li {
+          border-bottom: 1px solid rgba(233, 233, 233, 0.8);
+          display: flex;
+          align-items: flex-start;
+          padding: 10px 0;
+          .food-icon {
+            margin: 0 10px 0 10px;
+          }
+          .food-info {
+            width: 100%;
+            font-size: 12px;
+            color: gray;
+            .food-name {
+              color: #000;
+              font-size: 14px;
+              font-weight: bold;
+              margin-bottom: 5px;
+            }
+            .food-des {
+              margin-bottom: 1px;
+              max-width: 240px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
+          .food-sale {
+            margin-bottom: 5px;
+          }
+          .food-price {
+            font-size: 16px;
+            color: red;
+            display: flex;
+            justify-content: space-between;
+            .food-btn {
+              font-size: inherit;
+              display: inline-block;
+              display: flex;
+              align-items: center;
+              padding: 0 10px;
+            }
+          }
+        }
       }
     }
   }
-  .good-info {
-    height: 100%;
-    .good-wrapper {
-      height: 100%;
-      overflow: hidden;
-      .good-title {
-        background: #ccc;
-        border-left: 2px solid rgba(66, 65, 65, 0.5);
-        padding-left: 10px;
-      }
-      .food-li {
-        border-bottom: 1px solid rgba(233, 233, 233, 0.8);
-        display: flex;
-        align-items: flex-start;
-        padding: 10px 0;
-        .food-icon {
-          margin: 0 10px 0 10px;
-        }
-        .food-info {
-          width: 100%;
-          font-size: 12px;
-          color: gray;
-          .food-name {
-            color: #000;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 5px;
-          }
-          .food-des {
-            margin-bottom: 1px;
-            max-width: 240px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-        }
-        .food-sale {
-          margin-bottom: 5px;
-        }
-        .food-price {
-          font-size: 16px;
-          color: red;
-          display: flex;
-          justify-content: space-between;
-          .food-btn {
-            font-size: inherit;
-            display: inline-block;
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-          }
-        }
-      }
-    }
+  .shopping {
+    height: 56px;
   }
 }
 </style>

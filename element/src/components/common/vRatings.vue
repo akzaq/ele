@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { formatDate } from '@/utils/formatDate'
+import { formatDate } from '@/assets/utils/formatDate'
 export default {
   name: 'vRatings',
   props: {

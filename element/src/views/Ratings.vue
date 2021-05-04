@@ -51,7 +51,7 @@
 <script>
 import BScroll from 'better-scroll'
 import { mapState } from 'vuex'
-import getStars from '@/utils/getStars'
+import getStars from '@/assets/utils/getStars'
 import vRatings from '@/components/common/vRatings'
 export default {
   name: 'Ratings',
@@ -84,8 +84,6 @@ export default {
     initScroll() {
       this.$nextTick(() => {
         this.scroll = new BScroll(this.$refs.wrapper, {
-          // scrollbar: true, //滚动条样式
-          // pullDownRefresh: true, //配置顶部下拉的距离来决定刷新时机
           observeDOM: true, //开启对 content 以及 content 子元素 DOM 改变的探测。
           click: true, //开启点击事件
           probeType: 3, //监测实时滚动

@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import getStars from '@/utils/getStars'
+import getStars from '@/assets/utils/getStars'
 export default {
   name: 'HeaderOverlay',
   props: {

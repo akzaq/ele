@@ -1,7 +1,7 @@
 <template>
-  <div class="page-seller" ref="wrapper">
-    <div class="content">
-      <div>
+  <div class="page-seller">
+    <div class="wrapper" ref="wrapper">
+      <div class="content">
         <div class="store">
           <div class="title">
             <div class="title-left">
@@ -107,7 +107,7 @@
 <script>
 import BScroll from 'better-scroll'
 import { mapState } from 'vuex'
-import getStars from '@/utils/getStars'
+import getStars from '@/assets/utils/getStars'
 export default {
   name: 'Seller',
   data() {
@@ -132,6 +132,7 @@ export default {
       this.$nextTick(() => {
         new BScroll(this.$refs.wrapper, {
           click: true,
+          observeDOM: true,
         })
 
         new BScroll(this.$refs.ulWrapper, {
@@ -150,7 +151,10 @@ export default {
 
 <style lang="scss" scoped>
 .page-seller {
-  overflow: hidden;
+  .wrapper {
+    height: 100%;
+    overflow: hidden;
+  }
   .content {
     background: #f3f5f7;
     font-size: 14px;
